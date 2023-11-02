@@ -11,8 +11,6 @@ function App() {
       <Route path="/">
         <Route index element={<ChallengeList />} />
         <Route path="/challenge/:id" element={<Challenge />} />
-        {/* <Route path="/challenge/:id/submit" element={<SolutionSubmission />} /> */}
-        {/* <Route path="/challenge" element={<ChallengeList />} /> */}
         <Route path="/home" element={<Home />} />
       </Route>
     </Routes>

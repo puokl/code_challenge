@@ -1,11 +1,5 @@
-// return str
-// .split(" ")
-// .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-// .join(" ");
-
 const express = require("express");
-const bodyParser = require("body-parser");
-const challengesRoute = require("../routes/challengesRoute");
+const routes = require("./routes");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
@@ -21,8 +15,7 @@ app.use(cors());
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(challengesRoute);
+app.use(routes);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

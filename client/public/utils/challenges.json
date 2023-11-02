@@ -3,8 +3,8 @@
     "id": 1,
     "title": "Uppercase First Letter",
     "description": "Converts the first letter of each word of a string to uppercase.",
-    "functionName": "capitalize",
-    "initialCode": "function capitalize(str) {\n  // Write your code here\n}",
+    "functionName": "upperCaseFirstLetter",
+    "initialCode": "function upperCaseFirstLetter(str) {\n  // Write your code here\n}",
     "testCases": [
       {
         "input": "\"hello world\"",
