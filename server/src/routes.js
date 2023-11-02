@@ -27,6 +27,7 @@ router.post("/submit", (req, res) => {
 
   // Run the Jest tests
   exec(`npx jest ${testFilePath}`, (err, stdout, stderr) => {
+    console.log("stderr", stderr);
     if (err) {
       const cleanedOutput = cleanJestOutput(stderr.toString());
       return res.status(500).json({ error: cleanedOutput });

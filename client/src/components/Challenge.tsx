@@ -5,6 +5,7 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/mode/javascript/javascript";
 import "../styles.css";
 import { highlightTestResults } from "../utils/resultStyle";
+import Modal from "../utils/Modal";
 
 interface Challenge {
   id: number;
@@ -12,7 +13,9 @@ interface Challenge {
   description: string;
   functionName: string;
   initialCode: string;
-  testCases: { input: string; output: string }[];
+  note?: string;
+  note2?: string;
+  solution?: string;
 }
 
 const Challenge: React.FC = () => {
@@ -23,25 +26,25 @@ const Challenge: React.FC = () => {
   const [challengeId, setChallengeId] = useState<number | null>(null);
   const [challengeName, setChallengeName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSolution, setShowSolution] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (id) {
-      fetch("/utils/challenges.json")
-        .then((response) => response.json())
-        .then((data: Challenge[]) => {
-          const selectedChallenge = data.find(
-            (ch) => ch.id === parseInt(id, 10)
-          );
-          if (selectedChallenge) {
-            setChallenge(selectedChallenge);
-            setUserCode(selectedChallenge.initialCode);
-            setChallengeId(selectedChallenge.id);
-            setChallengeName(selectedChallenge.functionName);
-          }
-        })
-        .catch((error) => console.error("Error loading challenge:", error));
+  const handleToggleSolution = () => {
+    if (!showSolution) {
+      setIsModalOpen(true); // Open modal if trying to show solution
+    } else {
+      setShowSolution(false); // Hide solution immediately
     }
-  }, [id]);
+  };
+
+  const handleConfirmShowSolution = () => {
+    setShowSolution(true);
+    setIsModalOpen(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleSubmit = async () => {
     try {
@@ -81,6 +84,24 @@ const Challenge: React.FC = () => {
       setIsLoading(false);
     }
   };
+  useEffect(() => {
+    if (id) {
+      fetch("/utils/challenges.json")
+        .then((response) => response.json())
+        .then((data: Challenge[]) => {
+          const selectedChallenge = data.find(
+            (ch) => ch.id === parseInt(id, 10)
+          );
+          if (selectedChallenge) {
+            setChallenge(selectedChallenge);
+            setUserCode(selectedChallenge.initialCode);
+            setChallengeId(selectedChallenge.id);
+            setChallengeName(selectedChallenge.functionName);
+          }
+        })
+        .catch((error) => console.error("Error loading challenge:", error));
+    }
+  }, [id]);
 
   if (!challenge) return <div>Loading...</div>;
 
@@ -128,6 +149,26 @@ const Challenge: React.FC = () => {
           </div>
         )}
       </div>
+
+      <button
+        onClick={handleToggleSolution}
+        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mt-4"
+      >
+        {showSolution ? "Hide Solution" : "Show Solution"}
+      </button>
+
+      {showSolution && (
+        <div className="solution mt-4">
+          <h2 className="text-2xl font-semibold mb-4">Solution</h2>
+          <pre className="text-sm">{challenge.solution}</pre>
+        </div>
+      )}
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmShowSolution}
+      />
     </div>
   );
 };

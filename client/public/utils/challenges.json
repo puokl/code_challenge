@@ -5,12 +5,7 @@
     "description": "Converts the first letter of each word of a string to uppercase.",
     "functionName": "upperCaseFirstLetter",
     "initialCode": "function upperCaseFirstLetter(str) {\n  // Write your code here\n}",
-    "testCases": [
-      {
-        "input": "\"hello world\"",
-        "output": "\"Hello World\""
-      }
-    ]
+    "solution": "function capitalize(str) {\n  return str\n    .split(\" \")\n    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))\n    .join(\" \");\n}"
   },
   {
     "id": 2,
@@ -18,15 +13,50 @@
     "description": "Returns a passed string with letters in alphabetical order.",
     "functionName": "alphabeticalOrder",
     "initialCode": "function alphabeticalOrder(str) {\n  // Write your code here\n}",
-    "testCases": [
-      {
-        "input": "\"webmaster\"",
-        "output": "\"abeemrstw\""
-      },
-      {
-        "input": "\"javascript\"",
-        "output": "\"aacijprstv\""
-      }
-    ]
+    "solution": "function alphabeticalOrder(str) {\n  return str.split(\"\").sort().join(\"\");\n}"
+  },
+  {
+    "id": 3,
+    "title": "Factorial",
+    "description": "Calculates the factorial of a given non-negative integer.",
+    "functionName": "factorial",
+    "initialCode": "function factorial(n) {\n  // Write your code here\n}",
+    "note": "In mathematics, the factorial of a non-negative integer n, denoted by n!, is the product of all positive integers less than or equal to n. For example, 5! = 5 x 4 x 3 x 2 x 1 = 120",
+    "solution": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  }\n  return n * factorial(n - 1);\n}"
+  },
+  {
+    "id": 4,
+    "title": "Palindrome Checker",
+    "description": "Checks whether a given string is a palindrome.",
+    "functionName": "isPalindrome",
+    "initialCode": "function isPalindrome(str) {\n  // Write your code here\n}",
+    "note": "A palindrome is a word, number, phrase, or other sequence of symbols that reads the same backwards as forwards.",
+    "note2": "palindromes are typically considered on a character-by-character basis, ignoring spaces, punctuation, and capitalization",
+    "solution": "function isPalindrome(str) {\n  const cleanedStr = str.toLowerCase().replace(/[^a-z0-9]+/g, \"\");\n  return cleanedStr === cleanedStr.split(\"\").reverse().join(\"\");\n}"
+  },
+  {
+    "id": 5,
+    "title": "Check if is a Date Object",
+    "description": "Write a JavaScript function to check whether an input is a date object or not.",
+    "functionName": "isDateObject",
+    "initialCode": "function isDateObject(input) {\n  // Write your code here\n}",
+    "note": "console.log(isDateObject(\"October 13, 2014 11:13:00\")) is false \n console.log(isDateObject(new Date(86400000))) is true",
+    "solution": "function isDateObject(input) {\n  return input instanceof Date;\n}"
+  },
+  {
+    "id": 6,
+    "title": "Is Weekend",
+    "description": "Write a JavaScript function to test whether a given date is a weekend. The function should return `true` if the date is a weekend, and `false` otherwise.",
+    "functionName": "isWeekend",
+    "initialCode": "function isWeekend(date) {\n  // Write your code here\n}",
+    "solution": "function isWeekend(date) {\n  if (!(date instanceof Date)) {\n    throw new Error(\"Input is not a Date object\");\n  }\n\n  const dayOfWeek = date.getDay();\n  return dayOfWeek === 0 || dayOfWeek === 6;\n}"
+  },
+  {
+    "id": 7,
+    "title": "University Departments Management",
+    "description": "Create a class called University with methods to manage its departments. Ensure that each department in the university is unique. Include methods to add a department [addDepartment], remove a department [removeDepartment], and display all departments [getDepartments].",
+    "functionName": "University",
+    "initialCode": "class University {\n  constructor(name) {\n    // Your code here\n  }\n  // Add your methods here\n}",
+    "solution": "class University {\n  constructor(name) {\n    this.name = name;\n    this.departments = new Set();\n  }\n\n  addDepartment(departmentName) {\n    this.departments.add(departmentName);\n  }\n\n  removeDepartment(departmentName) {\n    this.departments.delete(departmentName);\n  }\n\n  getDepartments() {\n    return Array.from(this.departments);\n  }\n}"
   }
 ]
