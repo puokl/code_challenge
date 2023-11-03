@@ -1,14 +1,18 @@
 [
   {
     "id": 1,
+    "level": "easy",
+    "category": "String Manipulation",
     "title": "Uppercase First Letter",
     "description": "Converts the first letter of each word of a string to uppercase.",
     "functionName": "upperCaseFirstLetter",
     "initialCode": "function upperCaseFirstLetter(str) {\n  // Write your code here\n}",
-    "solution": "function capitalize(str) {\n  return str\n    .split(\" \")\n    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))\n    .join(\" \");\n}"
+    "solution": "function upperCaseFirstLetter(str) {\n  return str\n    .split(\" \")\n    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))\n    .join(\" \");\n}"
   },
   {
     "id": 2,
+    "level": "easy",
+    "category": "String Manipulation",
     "title": "Alphabetical Order",
     "description": "Returns a passed string with letters in alphabetical order.",
     "functionName": "alphabeticalOrder",
@@ -17,6 +21,8 @@
   },
   {
     "id": 3,
+    "level": "medium",
+    "category": "Maths",
     "title": "Factorial",
     "description": "Calculates the factorial of a given non-negative integer.",
     "functionName": "factorial",
@@ -26,6 +32,8 @@
   },
   {
     "id": 4,
+    "level": "easy",
+    "category": "String Manipulation",
     "title": "Palindrome Checker",
     "description": "Checks whether a given string is a palindrome.",
     "functionName": "isPalindrome",
@@ -36,6 +44,8 @@
   },
   {
     "id": 5,
+    "level": "easy",
+    "category": "Date and Time",
     "title": "Check if is a Date Object",
     "description": "Write a JavaScript function to check whether an input is a date object or not.",
     "functionName": "isDateObject",
@@ -45,6 +55,8 @@
   },
   {
     "id": 6,
+    "level": "easy",
+    "category": "Date and Time",
     "title": "Is Weekend",
     "description": "Write a JavaScript function to test whether a given date is a weekend. The function should return `true` if the date is a weekend, and `false` otherwise.",
     "functionName": "isWeekend",
@@ -53,10 +65,176 @@
   },
   {
     "id": 7,
+    "level": "medium",
+    "category": "OOP",
     "title": "University Departments Management",
     "description": "Create a class called University with methods to manage its departments. Ensure that each department in the university is unique. Include methods to add a department [addDepartment], remove a department [removeDepartment], and display all departments [getDepartments].",
     "functionName": "University",
     "initialCode": "class University {\n  constructor(name) {\n    // Your code here\n  }\n  // Add your methods here\n}",
     "solution": "class University {\n  constructor(name) {\n    this.name = name;\n    this.departments = new Set();\n  }\n\n  addDepartment(departmentName) {\n    this.departments.add(departmentName);\n  }\n\n  removeDepartment(departmentName) {\n    this.departments.delete(departmentName);\n  }\n\n  getDepartments() {\n    return Array.from(this.departments);\n  }\n}"
+  },
+  {
+    "id": 8,
+    "level": "easy",
+    "category": "Maths",
+    "title": "Power of Two Checker",
+    "description": "Write a JavaScript function to test if a given number is a power of 2.",
+    "functionName": "isPowerOfTwo",
+    "initialCode": "function isPowerOfTwo(num) {\n  // Your code here\n}",
+    "solution": "function isPowerOfTwo(num) {\n  if (num < 1) {\n    return false;\n  }\n  return (num & (num - 1)) === 0;\n}"
+  },
+  {
+    "id": 9,
+    "level": "easy",
+    "category": "String Manipulation",
+    "title": "Roman Numeral to Integer Converter",
+    "description": "Write a JavaScript function `romanToInt` that converts a Roman numeral string to an integer. The function should return 0 if the input string is not a valid Roman numeral.",
+    "functionName": "romanToInt",
+    "initialCode": "function romanToInt(s) {\n  // Your code here\n}",
+    "solution": "function romanToInt(s) {\n  const romanMap = {\n    'I': 1,\n    'V': 5,\n    'X': 10,\n    'L': 50,\n    'C': 100,\n    'D': 500,\n    'M': 1000\n  };\n  let total = 0;\n  let previousValue = 0;\n  for (let i = s.length - 1; i >= 0; i--) {\n    const currentValue = romanMap[s[i]];\n    if (currentValue < previousValue) {\n      total -= currentValue;\n    } else {\n      total += currentValue;\n    }\n    previousValue = currentValue;\n  }\n  return total;\n}"
+  },
+  {
+    "id": 10,
+    "level": "easy",
+    "category": "Maths",
+    "title": "Cube Volume Calculator",
+    "description": "Write a JavaScript function that calculates the volume of a cube. The function should take one argument: the length of a side of the cube, and return the volume.",
+    "functionName": "calculateCubeVolume",
+    "initialCode": "function calculateCubeVolume(side) {\n  // Your code here\n}",
+    "solution": "function calculateCubeVolume(side) {\n  return Math.pow(side, 3);\n}"
+  },
+  {
+    "id": 11,
+    "level": "easy",
+    "category": "Maths",
+    "title": "Find the Missing Number",
+    "description": "Write a JavaScript function to find the missing number in a given array of integers. You have to sort the array. Find and return the missing number.",
+    "functionName": "findMissingNumber",
+    "initialCode": "function findMissingNumber(arr) {\n  // Write your code here\n}",
+    "solution": "function findMissingNumber(arr) {\n  arr.sort((a, b) => a - b);\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i] - arr[i - 1] > 1) {\n      return arr[i - 1] + 1;\n    }\n  }\n}"
+  },
+  {
+    "id": 12,
+    "level": "medium",
+    "category": "String Manipulation",
+    "title": "Find First Non-Repeated Character",
+    "description": "Write a JavaScript function to find the first not repeated character in a given string.",
+    "functionName": "firstNonRepeatedCharacter",
+    "initialCode": "function firstNonRepeatedCharacter(str) {\n  // Write your code here\n}",
+    "solution": "function firstNonRepeatedCharacter(str) {\n  const charCount = {};\n  for (const char of str) {\n    charCount[char] = (charCount[char] || 0) + 1;\n  }\n  for (const char of str) {\n    if (charCount[char] === 1) {\n      return char;\n    }\n  }\n  return null;\n}"
+  },
+  {
+    "id": 13,
+    "level": "easy",
+    "category": "String Manipulation",
+    "title": "Letter Occurrences Counter",
+    "description": "Write a JavaScript function to get the number of occurrences of each letter in a specified string.",
+    "functionName": "letterOccurrences",
+    "initialCode": "function letterOccurrences(str) {\n  // Write your code here\n}",
+    "solution": "function letterOccurrences(str) {\n  const occurrences = {};\n  for (const char of str.replace(/[^a-zA-Z]/g, '')) {\n    const lowerChar = char.toLowerCase();\n    occurrences[lowerChar] = (occurrences[lowerChar] || 0) + 1;\n  }\n  return occurrences;\n}"
+  },
+  {
+    "id": 14,
+    "level": "medium",
+    "category": "Algorithm",
+    "title": "Binary Search",
+    "description": "Write a JavaScript function for searching a number in a sorted array of numbers using binary search. Return -1 if not in array",
+    "functionName": "binarySearch",
+    "initialCode": "function binarySearch(arr, target) {\n  // Write your code here\n}",
+    "solution": "function binarySearch(arr, target) {\n  let left = 0;\n  let right = arr.length - 1;\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n    if (arr[mid] === target) return mid;\n    if (arr[mid] < target) left = mid + 1;\n    else right = mid - 1;\n  }\n  return -1;\n}"
+  },
+  {
+    "id": 15,
+    "level": "easy",
+    "category": "Maths",
+    "title": "Least Common Multiple",
+    "description": "Write a function to find the Least Common Multiple (LCM) of two given integers.",
+    "functionName": "lcm",
+    "initialCode": "function lcm(a, b) {\n  // Your code here\n}",
+    "solution": "function gcd(a, b) {\n  if (!b) return a;\n  return gcd(b, a % b);\n}\n\nfunction lcm(a, b) {\n  return Math.abs(a * b) / gcd(a, b);\n}"
+  },
+  {
+    "id": 16,
+    "level": "easy",
+    "category": "Array handling",
+    "title": "Remove Duplicates",
+    "description": "Write a function to remove all duplicate values from an array, returning an array with only unique elements.",
+    "functionName": "removeDuplicates",
+    "initialCode": "function removeDuplicates(arr) {\n  // Your code here\n}",
+    "solution": "function removeDuplicates(arr) {\n  return [...new Set(arr)];\n}"
+  },
+  {
+    "id": 17,
+    "level": "easy",
+    "category": "Maths",
+    "title": "Check Prime",
+    "description": "Implement a function to check if a number is prime.",
+    "functionName": "isPrime",
+    "initialCode": "function isPrime(num) {\n  // Your code here\n}",
+    "solution": "function isPrime(num) {\n  if (num <= 1) return false;\n  if (num <= 3) return true;\n  if (num % 2 === 0 || num % 3 === 0) return false;\n  for (let i = 5; i * i <= num; i += 6) {\n    if (num % i === 0 || num % (i + 2) === 0) return false;\n  }\n  return true;\n}"
+  },
+  {
+    "id": 18,
+    "level": "easy",
+    "category": "OOP",
+    "title": "Create a Person Class",
+    "description": "Define a class to model a person with properties for name and age, and a method to display person info (ex. \"Name: Jane Doe, Age: 32\").",
+    "functionName": "Person",
+    "initialCode": "class Person {\n   // Your code here\n \n }\n",
+    "solution": "class Person {\n  constructor(name, age) {\n    this.name = name;\n    this.age = age;\n  }\n\n  displayInfo() {\n    console.log(`Name: ${this.name}, Age: ${this.age}`);\n  }\n}\n"
+  },
+  {
+    "id": 19,
+    "level": "medium",
+    "category": "Algorithm",
+    "title": "First Occurrence Binary Search",
+    "description": "Implement a function to find the first occurrence of a target element in a sorted array using binary search.",
+    "functionName": "findFirstOccurrence",
+    "initialCode": "function findFirstOccurrence(arr, target) {\n  // Your code here\n}",
+    "solution": "function findFirstOccurrence(arr, target) {\n  let start = 0;\n  let end = arr.length - 1;\n  let result = -1;\n\n  while (start <= end) {\n    let mid = Math.floor((start + end) / 2);\n    if (arr[mid] === target) {\n      result = mid;\n      end = mid - 1;\n    } else if (arr[mid] < target) {\n      start = mid + 1;\n    } else {\n      end = mid - 1;\n    }\n  }\n\n  return result;\n}"
+  },
+  {
+    "id": 20,
+    "level": "easy",
+    "category": "Array handling",
+    "title": "Find Leap Years",
+    "description": "Create a function to find all leap years within a given range.",
+    "functionName": "findLeapYears",
+    "initialCode": "function findLeapYears(startYear, endYear) {\n  // Your code here\n}",
+    "solution": "function findLeapYears(startYear, endYear) {\n  const leapYears = [];\n  for (let year = startYear; year <= endYear; year++) {\n    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {\n      leapYears.push(year);\n    }\n  }\n  return leapYears;\n}",
+    "note": "Create a function that finds all the leap years in a given range of years. The function should take two arguments, the start year and the end year, and return an array containing all the leap years between them, inclusive. A year is a leap year if it is divisible by 4 but not by 100, unless it is also divisible by 400."
+  },
+  {
+    "id": 21,
+    "level": "easy",
+    "category": "Array handling",
+    "title": "Merge Arrays and Remove Duplicates",
+    "description": "Create a function that merges two arrays and removes all duplicate elements.",
+    "functionName": "mergeAndDeduplicate",
+    "initialCode": "function mergeAndDeduplicate(arr1, arr2) {\n  // Your code here\n}",
+    "solution": "function mergeAndDeduplicate(arr1, arr2) {\n  const mergedArray = arr1.concat(arr2);\n  return [...new Set(mergedArray)];\n}",
+    "note": "Create a function that merges two input arrays and removes duplicate elements from the merged array. The function should return an array that contains every unique element from both input arrays, maintaining the order of the first occurrence of each element."
+  },
+  {
+    "id": 22,
+    "level": "easy",
+    "category": "Maths",
+    "title": "Calculate Sphere Volume",
+    "description": "Create a function to calculate and return the volume of a sphere given its radius.",
+    "functionName": "calculateSphereVolume",
+    "initialCode": "function calculateSphereVolume(radius) {\n  // Your code here\n}",
+    "solution": "function calculateSphereVolume(radius) {\n  return +(Math.PI * (4/3) * Math.pow(radius, 3)).toFixed(2);\n}",
+    "note": "You need to implement the 'calculateSphereVolume' function that will accept a single argument 'radius' and return the volume of the sphere rounded to two decimal places. Remember to use Math.PI for the π value."
+  },
+  {
+    "id": 23,
+    "level": "easy",
+    "category": "Date and Time",
+    "title": "Calculate Date Difference",
+    "description": "Write a function that calculates the difference in days between two dates.",
+    "functionName": "getDateDifference",
+    "initialCode": "function getDateDifference(date1, date2) {\n  // Your code here\n}",
+    "solution": "function getDateDifference(date1, date2) {\n  const ONE_DAY = 1000 * 60 * 60 * 24;\n  const differenceMs = Math.abs(new Date(date2) - new Date(date1));\n  return Math.round(differenceMs / ONE_DAY);\n}",
+    "note": "The function should take two date strings as input parameters and return the number of days between them. It should be able to handle date formats recognized by the JavaScript Date constructor."
   }
 ]

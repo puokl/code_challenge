@@ -6,9 +6,11 @@ import "codemirror/mode/javascript/javascript";
 import "../styles.css";
 import { highlightTestResults } from "../utils/resultStyle";
 import Modal from "../utils/Modal";
+import { useNavigate } from "react-router-dom";
 
 interface Challenge {
   id: number;
+  level?: string;
   title: string;
   description: string;
   functionName: string;
@@ -29,13 +31,43 @@ const Challenge: React.FC = () => {
   const [showSolution, setShowSolution] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [activeTab, setActiveTab] = useState("editor");
+
+  //ANCHOR -
+  const [confirmShowSolution, setConfirmShowSolution] = useState(false);
+
   const handleToggleSolution = () => {
     if (!showSolution) {
-      setIsModalOpen(true); // Open modal if trying to show solution
+      // If we're about to show the solution, ask for confirmation
+      setConfirmShowSolution(true);
     } else {
-      setShowSolution(false); // Hide solution immediately
+      // If we're hiding the solution, just hide it without confirmation
+      setShowSolution(false);
     }
   };
+
+  const confirmSolution = (answer: any) => {
+    if (answer) {
+      setShowSolution(true);
+    }
+    setConfirmShowSolution(false);
+  };
+
+  //ANCHOR -
+
+  const navigate = useNavigate();
+
+  const goBackToHome = () => {
+    navigate("/");
+  };
+
+  // const handleToggleSolution = () => {
+  //   if (!showSolution) {
+  //     setIsModalOpen(true); // Open modal if trying to show solution
+  //   } else {
+  //     setShowSolution(false); // Hide solution immediately
+  //   }
+  // };
 
   const handleConfirmShowSolution = () => {
     setShowSolution(true);
@@ -62,7 +94,7 @@ const Challenge: React.FC = () => {
       });
 
       const result = await response.json();
-      console.log("result", result.error);
+      console.log("result", result);
 
       if (!response.ok) {
         console.error("Server error:", response.status, response.statusText);
@@ -71,12 +103,32 @@ const Challenge: React.FC = () => {
         return;
       }
 
-      console.log("Test Results:", result);
-
       if (result.stderr) {
         console.log("Test Failures or Errors:", result.stderr);
         const clean_stderr = result.stderr.split("\nRan all test")[0];
         setTestResults(clean_stderr);
+
+        // Check if the first word is PASS
+        const testOutcome = clean_stderr.split(" ")[0];
+        if (testOutcome === "PASS") {
+          // Retrieve the item from localStorage and if it's null, default to "[]"
+          const passedChallengesString =
+            localStorage.getItem("passedChallenges") || "[]";
+          const passedChallenges = JSON.parse(passedChallengesString);
+
+          const challengeData = { title: challengeName, id: challengeId };
+          const challengeExists = passedChallenges.some(
+            (c: any) => c.id === challengeData.id
+          );
+
+          if (!challengeExists) {
+            passedChallenges.push(challengeData);
+            localStorage.setItem(
+              "passedChallenges",
+              JSON.stringify(passedChallenges)
+            );
+          }
+        }
       }
     } catch (error) {
       console.error("Error submitting code:", error);
@@ -106,11 +158,22 @@ const Challenge: React.FC = () => {
   if (!challenge) return <div>Loading...</div>;
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-semibold mb-4">{challenge.title}</h1>
-      <p className="text-gray-600 mb-4">{challenge.description}</p>
+    <div className="container mx-auto p-8">
+      <button
+        onClick={goBackToHome}
+        className="absolute top-2 left-2 bg-blue-500 text-white font-semibold py-2 px-4 rounded-md"
+        style={{ position: "absolute" }} // Ensure it is positioned in the top-left
+      >
+        Home
+      </button>
+      <h1 className="text-4xl font-bold mb-6">{challenge.title}</h1>
+      <p className="text-gray-700 mb-2">{challenge.description}</p>
+      {challenge.note && (
+        <p className="text-gray-500 text-xs mb-4">{challenge.note}</p>
+      )}
+
       <div className="flex">
-        <div className="first flex-1 w-1/2">
+        <div className="flex-1 w-1/2 pr-2">
           <CodeMirror
             value={userCode}
             options={{
@@ -121,43 +184,53 @@ const Challenge: React.FC = () => {
             onBeforeChange={(_editor, _data, value) => {
               setUserCode(value);
             }}
+            editorDidMount={(editor) => {
+              editor.setSize(null, "400px");
+            }}
           />
-
-          <button
-            onClick={handleSubmit}
-            className="bg-green-500 text-white font-semibold py-2 px-4 rounded-md mt-4"
-          >
-            Submit
-          </button>
         </div>
-        {testResults && !isLoading && (
-          <div className="second flex-1 ml-5">
+
+        <div className="flex-1 w-1/2 pl-2">
+          <div
+            className={`h-full border bg-slate-100 ${
+              isLoading
+                ? "border-stone-400 animate-pulse border-4"
+                : "border-gray-300"
+            } rounded-md p-4`}
+          >
             <h2 className="text-2xl font-semibold mb-4">Test Results</h2>
-            <div className="test-results">
-              <pre
-                dangerouslySetInnerHTML={{
-                  __html: highlightTestResults(testResults),
-                }}
-              />
-            </div>
+            {isLoading ? (
+              <div className="text-gray-500">Running tests...</div>
+            ) : (
+              testResults && (
+                <div className="test-results overflow-auto whitespace-pre-wrap">
+                  <pre
+                    dangerouslySetInnerHTML={{
+                      __html: highlightTestResults(testResults),
+                    }}
+                  />
+                </div>
+              )
+            )}
           </div>
-        )}
-        {isLoading && (
-          <div className="second flex-1 ml-5">
-            <h2 className="text-2xl font-semibold mb-4">Test Results</h2>
-            <div>Loading...</div>
-          </div>
-        )}
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <button
+          onClick={handleSubmit}
+          className="bg-green-500 text-white font-semibold py-2 px-4 rounded-md mt-4 w-36"
+        >
+          Submit
+        </button>
+        {/* <button
+          onClick={handleToggleSolution}
+          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mt-6 w-36"
+        >
+          {showSolution ? "Hide Solution" : "Show Solution"}
+        </button> */}
       </div>
 
-      <button
-        onClick={handleToggleSolution}
-        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mt-4"
-      >
-        {showSolution ? "Hide Solution" : "Show Solution"}
-      </button>
-
-      {showSolution && (
+      {/* {showSolution && (
         <div className="solution mt-4">
           <h2 className="text-2xl font-semibold mb-4">Solution</h2>
           <pre className="text-sm">{challenge.solution}</pre>
@@ -168,7 +241,41 @@ const Challenge: React.FC = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onConfirm={handleConfirmShowSolution}
-      />
+      /> */}
+
+      <div>
+        <button
+          onClick={handleToggleSolution}
+          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mt-6 w-36"
+        >
+          {showSolution ? "Hide Solution" : "Show Solution"}
+        </button>
+        {confirmShowSolution && (
+          <span className="inline-block ml-4">
+            Are you sure?
+            <span
+              onClick={() => confirmSolution(true)}
+              className="text-green-600 cursor-pointer ml-2"
+            >
+              Yes
+            </span>
+            <span className="mx-1">/</span>
+            <span
+              onClick={() => confirmSolution(false)}
+              className="text-red-600 cursor-pointer ml-1"
+            >
+              No
+            </span>
+          </span>
+        )}
+      </div>
+
+      {showSolution && (
+        <div className="solution mt-4">
+          <h2 className="text-2xl font-semibold mb-4">Solution</h2>
+          <pre className="text-sm">{challenge.solution}</pre>
+        </div>
+      )}
     </div>
   );
 };

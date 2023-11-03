@@ -1,7 +1,19 @@
 class University {
   constructor(name) {
-    // Your code here
+    this.name = name;
+    this.departments = new Set();
   }
-  // Add your methods here
+
+  addDepartment(departmentName) {
+    this.departments.add(departmentName);
+  }
+
+  removeDepartment(departmentName) {
+    this.departments.delete(departmentName);
+  }
+
+  getDepartments() {
+    return Array.from(this.departments);
+  }
 }
 module.exports = University;

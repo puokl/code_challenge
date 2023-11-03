@@ -43,7 +43,7 @@ function isWeekend(date) {
   return dayOfWeek === 0 || dayOfWeek === 6;
 }
 
-// Challenge : University OOP
+// Challenge 7: University OOP
 class University {
   constructor(name) {
     this.name = name;

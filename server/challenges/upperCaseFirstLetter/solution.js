@@ -1,4 +1,7 @@
 function upperCaseFirstLetter(str) {
-  // Write your code here
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 module.exports = upperCaseFirstLetter;

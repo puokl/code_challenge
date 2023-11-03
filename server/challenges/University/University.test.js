@@ -1,5 +1,5 @@
 const University = require("./solution");
-const { expect } = require("@jest/globals");
+// const { expect } = require("@jest/globals");
 
 describe("University Class Tests", () => {
   const university = new University("My University");
@@ -27,7 +27,7 @@ describe("University Class Tests", () => {
     expect(departments).toEqual(["Mathematics"]);
   });
 
-  test("Should handle removing non-existing departments gracefully", () => {
+  test("Should handle removing non-existing departments", () => {
     university.removeDepartment("Physics");
     const departments = university.getDepartments();
     expect(departments).toEqual(["Mathematics"]);
