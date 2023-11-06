@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const routes = require("./routes");
 const cors = require("cors");
@@ -9,9 +10,13 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per windowMs
 });
 const app = express();
-const port = 3001;
+const port = 5000;
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN,
+  optionsSuccessStatus: 200,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
