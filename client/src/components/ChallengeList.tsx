@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 interface Challenge {
@@ -18,7 +18,7 @@ interface Local {
 
 const ChallengeList: React.FC = () => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [passedChallenges, setPassedChallenges] = useState<Local[]>([]);
 
   const categories = useMemo(() => {

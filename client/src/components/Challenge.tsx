@@ -5,10 +5,10 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/mode/javascript/javascript";
 import "../styles.css";
 import { highlightTestResults } from "../utils/resultStyle";
-import Modal from "../utils/Modal";
+
 import { useNavigate } from "react-router-dom";
 
-interface Challenge {
+interface ChallengeProps {
   id: number;
   level?: string;
   title: string;
@@ -22,19 +22,15 @@ interface Challenge {
 
 const Challenge: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [challenge, setChallenge] = useState<Challenge | null>(null);
+  const [challenge, setChallenge] = useState<ChallengeProps | null>(null);
   const [userCode, setUserCode] = useState("");
   const [testResults, setTestResults] = useState<string | null>(null);
   const [challengeId, setChallengeId] = useState<number | null>(null);
   const [challengeName, setChallengeName] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSolution, setShowSolution] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [activeTab, setActiveTab] = useState("editor");
-
-  //ANCHOR -
-  const [confirmShowSolution, setConfirmShowSolution] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showSolution, setShowSolution] = useState<boolean>(false);
+  const [confirmShowSolution, setConfirmShowSolution] =
+    useState<boolean>(false);
 
   const handleToggleSolution = () => {
     if (!showSolution) {
@@ -53,35 +49,16 @@ const Challenge: React.FC = () => {
     setConfirmShowSolution(false);
   };
 
-  //ANCHOR -
-
   const navigate = useNavigate();
 
   const goBackToHome = () => {
     navigate("/");
   };
 
-  // const handleToggleSolution = () => {
-  //   if (!showSolution) {
-  //     setIsModalOpen(true); // Open modal if trying to show solution
-  //   } else {
-  //     setShowSolution(false); // Hide solution immediately
-  //   }
-  // };
-
-  const handleConfirmShowSolution = () => {
-    setShowSolution(true);
-    setIsModalOpen(false);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:5000/submit", {
+      const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +88,6 @@ const Challenge: React.FC = () => {
         // Check if the first word is PASS
         const testOutcome = clean_stderr.split(" ")[0];
         if (testOutcome === "PASS") {
-          // Retrieve the item from localStorage and if it's null, default to "[]"
           const passedChallengesString =
             localStorage.getItem("passedChallenges") || "[]";
           const passedChallenges = JSON.parse(passedChallengesString);
@@ -140,7 +116,7 @@ const Challenge: React.FC = () => {
     if (id) {
       fetch("/utils/challenges.json")
         .then((response) => response.json())
-        .then((data: Challenge[]) => {
+        .then((data: ChallengeProps[]) => {
           const selectedChallenge = data.find(
             (ch) => ch.id === parseInt(id, 10)
           );
@@ -222,26 +198,7 @@ const Challenge: React.FC = () => {
         >
           Submit
         </button>
-        {/* <button
-          onClick={handleToggleSolution}
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mt-6 w-36"
-        >
-          {showSolution ? "Hide Solution" : "Show Solution"}
-        </button> */}
       </div>
-
-      {/* {showSolution && (
-        <div className="solution mt-4">
-          <h2 className="text-2xl font-semibold mb-4">Solution</h2>
-          <pre className="text-sm">{challenge.solution}</pre>
-        </div>
-      )}
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmShowSolution}
-      /> */}
 
       <div>
         <button
