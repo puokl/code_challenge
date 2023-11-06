@@ -21,6 +21,7 @@ app.use(helmet());
 app.use(limiter);
 app.use(express.json());
 app.use(routes);
+app.set("trust proxy", true);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

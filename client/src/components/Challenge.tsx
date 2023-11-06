@@ -5,7 +5,6 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/mode/javascript/javascript";
 import "../styles.css";
 import { highlightTestResults } from "../utils/resultStyle";
-import Modal from "../utils/Modal";
 import { useNavigate } from "react-router-dom";
 
 interface Challenge {
@@ -29,19 +28,15 @@ const Challenge: React.FC = () => {
   const [challengeName, setChallengeName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [activeTab, setActiveTab] = useState("editor");
-
-  //ANCHOR -
   const [confirmShowSolution, setConfirmShowSolution] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleToggleSolution = () => {
     if (!showSolution) {
       // If we're about to show the solution, ask for confirmation
       setConfirmShowSolution(true);
     } else {
-      // If we're hiding the solution, just hide it without confirmation
       setShowSolution(false);
     }
   };
@@ -53,35 +48,14 @@ const Challenge: React.FC = () => {
     setConfirmShowSolution(false);
   };
 
-  //ANCHOR -
-
-  const navigate = useNavigate();
-
   const goBackToHome = () => {
     navigate("/");
-  };
-
-  // const handleToggleSolution = () => {
-  //   if (!showSolution) {
-  //     setIsModalOpen(true); // Open modal if trying to show solution
-  //   } else {
-  //     setShowSolution(false); // Hide solution immediately
-  //   }
-  // };
-
-  const handleConfirmShowSolution = () => {
-    setShowSolution(true);
-    setIsModalOpen(false);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:3001/submit", {
+      const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,11 +68,8 @@ const Challenge: React.FC = () => {
       });
 
       const result = await response.json();
-      console.log("result", result);
 
       if (!response.ok) {
-        console.error("Server error:", response.status, response.statusText);
-        console.log("Error response body:", result);
         setTestResults(result.error);
         return;
       }
@@ -162,7 +133,6 @@ const Challenge: React.FC = () => {
       <button
         onClick={goBackToHome}
         className="absolute top-2 left-2 bg-blue-500 text-white font-semibold py-2 px-4 rounded-md"
-        style={{ position: "absolute" }} // Ensure it is positioned in the top-left
       >
         Home
       </button>
@@ -222,26 +192,7 @@ const Challenge: React.FC = () => {
         >
           Submit
         </button>
-        {/* <button
-          onClick={handleToggleSolution}
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mt-6 w-36"
-        >
-          {showSolution ? "Hide Solution" : "Show Solution"}
-        </button> */}
       </div>
-
-      {/* {showSolution && (
-        <div className="solution mt-4">
-          <h2 className="text-2xl font-semibold mb-4">Solution</h2>
-          <pre className="text-sm">{challenge.solution}</pre>
-        </div>
-      )}
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmShowSolution}
-      /> */}
 
       <div>
         <button
