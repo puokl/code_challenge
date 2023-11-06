@@ -16,10 +16,8 @@ router.post("/submit", (req, res) => {
 
   // Ensure the directory exists
   fs.mkdirSync(challengeDir, { recursive: true });
-
   // Append the module.exports line to the user's code
   const codeToSave = `${code}\nmodule.exports = ${challengeName};`;
-
   // Save the user's code with the module.exports line to the solution.js file
   fs.writeFileSync(path.join(challengeDir, "solution.js"), codeToSave);
 
