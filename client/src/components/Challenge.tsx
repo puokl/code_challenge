@@ -81,7 +81,7 @@ const Challenge: React.FC = () => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:3001/submit", {
+      const response = await fetch("http://localhost:5000/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
