@@ -236,5 +236,17 @@
     "initialCode": "function getDateDifference(date1, date2) {\n  // Your code here\n}",
     "solution": "function getDateDifference(date1, date2) {\n  const ONE_DAY = 1000 * 60 * 60 * 24;\n  const differenceMs = Math.abs(new Date(date2) - new Date(date1));\n  return Math.round(differenceMs / ONE_DAY);\n}",
     "note": "The function should take two date strings as input parameters and return the number of days between them. It should be able to handle date formats recognized by the JavaScript Date constructor."
+  },
+  {
+    "id": 26,
+    "level": "medium",
+    "category": "String Manipulation",
+    "title": "Build Pyramid",
+    "description": "Create a function that builds a pyramid with a given number of floors.",
+    "functionName": "build",
+    "initialCode": "function build(n) {\n  // Your code here\n}",
+    "solution": "function build(n) {\n  if (n === null || typeof n !== 'number') throw new TypeError('Invalid input: Input must be a number');\n  if (n <= 0) throw new RangeError('Invalid input: Number of floors must be positive');\n  const pyramid = [];\n  for (let i = 0; i < n; i++) {\n    pyramid.push(' '.repeat(n - i - 1) + '*'.repeat(2 * i + 1) + ' '.repeat(n - i - 1));\n  }\n  return pyramid;\n}",
+    "note": "The function should return an array of strings representing each floor of the pyramid. If `n` is zero or negative, throw a RangeError. If `n` is null or not a number, throw a TypeError.",
+    "note2": "Example of a 3-floor pyramid:\n    \"    *    \",\n    \"   ***   \",\n    \"  *****  \""
   }
 ]
