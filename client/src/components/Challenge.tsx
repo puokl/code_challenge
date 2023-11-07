@@ -119,7 +119,7 @@ const Challenge: React.FC = () => {
     <div className="w-screen p-8 bg-slate-300">
       <button
         onClick={goBackToHome}
-        className="flex absolute top-4 left-12 bg-blue-500 text-white font-semibold py-1 px-4 rounded-lg"
+        className="flex absolute top-6 left-12 bg-blue-400 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded-lg"
       >
         {/* <img src="/home.png" alt="Home" className="mr-2 w-5 h-5" /> */}
         Home
@@ -131,7 +131,7 @@ const Challenge: React.FC = () => {
           </h1>
 
           {/* Tab buttons */}
-          <div className="flex mb-4">
+          <div className="flex mb-2">
             <button
               className={`px-4 py-1 rounded-lg font-changa ${
                 activeTab === "instructions" ? " bg-slate-50" : "text-gray-500"
@@ -170,7 +170,7 @@ const Challenge: React.FC = () => {
             <div className="flex flex-col h-full border p-4 bg-gray-100 rounded-lg">
               <button
                 onClick={handleToggleSolution}
-                className="bg-teal-500 text-white font-semibold py-2 px-4 rounded-md my-4 w-1/3 mx-auto font-changa"
+                className="bg-teal-400 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-md my-4 w-1/3 mx-auto font-changa"
               >
                 {showSolution ? "Hide Solution" : "Show Solution"}
               </button>
@@ -202,7 +202,7 @@ const Challenge: React.FC = () => {
             <div className="flex flex-col">
               <button
                 onClick={handleSubmit}
-                className="bg-green-600 text-white font-semibold py-1 px-3 rounded-md mt-4 w-36 absolute top-0 right-0 m-4"
+                className="bg-emerald-400 hover:bg-emerald-600 text-white font-semibold py-1 px-3 rounded-md mt-4 w-36 absolute top-0 right-0 m-4"
               >
                 Submit
               </button>

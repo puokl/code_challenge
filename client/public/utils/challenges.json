@@ -23,15 +23,16 @@
   },
   {
     "id": 3,
-    "level": "medium",
-    "category": "Maths",
-    "title": "Factorial",
-    "description": "Create a function named 'factorial' that computes the factorial of a given non-negative integer, n.\n\nThe factorial of n (denoted as n!) is the product of all positive integers less than or equal to n.\n\nFor instance, the factorial of 5 (5!) is calculated as 5 x 4 x 3 x 2 x 1.",
-    "functionName": "factorial",
-    "initialCode": "function factorial(n) {\n  // Write your code here\n}",
-    "note": "For the input 5, the function should return 120 as 5! equals 5 x 4 x 3 x 2 x 1 which is 120.\n\nFor the input 0, the function should return 1, since 0! is defined as 1.",
-    "solution": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  }\n  return n * factorial(n - 1);\n}"
+    "level": "easy",
+    "category": "Array",
+    "title": "Remove Duplicates",
+    "description": "Design a function named 'removeDuplicates' that takes an array as input and returns a new array with all duplicate elements removed, preserving only unique elements.\n\nThe order of elements in the output should reflect their first occurrence in the input array.",
+    "functionName": "removeDuplicates",
+    "initialCode": "function removeDuplicates(arr) {\n  // Your code here\n}",
+    "note": "For example, given the array [1, 2, 2, 3, 4, 4, 4, 5], the function should return [1, 2, 3, 4, 5].",
+    "solution": "function removeDuplicates(arr) {\n  return [...new Set(arr)];\n}"
   },
+
   {
     "id": 4,
     "level": "easy",
@@ -46,14 +47,15 @@
   {
     "id": 5,
     "level": "easy",
-    "category": "Date and Time",
-    "title": "Check if is a Date Object",
-    "description": "Design a function 'isDateObject' that determines whether an input is a Date object.\n\nThe function should return `true` for Date objects and `false` for any other type of input.",
-    "functionName": "isDateObject",
-    "initialCode": "function isDateObject(input) {\n  // Write your code here\n}",
-    "note": "For instance, calling isDateObject(new Date()) should return `true`.\n\nMeanwhile, isDateObject('2021-10-15') should return `false` as it's a string representation of a date, not a Date object itself.",
-    "solution": "function isDateObject(input) {\n  return input instanceof Date;\n}"
+    "category": "Maths",
+    "title": "Cube Volume Calculator",
+    "description": "Construct a JavaScript function called 'calculateCubeVolume' that computes the volume of a cube.\n\nThe function should accept one parameter: the length of an edge of the cube.\n\nIt must return the cube's volume, which is the cube of the edge length.",
+    "functionName": "calculateCubeVolume",
+    "initialCode": "function calculateCubeVolume(side) {\n  // Write your code here\n}",
+    "note": "For instance, if the length of the cube's side is 3, the volume is 27 because the cube of 3 is 3^3 or 3*3*3, which equals 27.",
+    "solution": "function calculateCubeVolume(side) {\n  return Math.pow(side, 3);\n}"
   },
+
   {
     "id": 6,
     "level": "easy",
@@ -102,13 +104,13 @@
   {
     "id": 10,
     "level": "easy",
-    "category": "Maths",
-    "title": "Cube Volume Calculator",
-    "description": "Construct a JavaScript function called 'calculateCubeVolume' that computes the volume of a cube.\n\nThe function should accept one parameter: the length of an edge of the cube.\n\nIt must return the cube's volume, which is the cube of the edge length.",
-    "functionName": "calculateCubeVolume",
-    "initialCode": "function calculateCubeVolume(side) {\n  // Write your code here\n}",
-    "note": "For instance, if the length of the cube's side is 3, the volume is 27 because the cube of 3 is 3^3 or 3*3*3, which equals 27.",
-    "solution": "function calculateCubeVolume(side) {\n  return Math.pow(side, 3);\n}"
+    "category": "Date and Time",
+    "title": "Check if is a Date Object",
+    "description": "Design a function 'isDateObject' that determines whether an input is a Date object.\n\nThe function should return `true` for Date objects and `false` for any other type of input.",
+    "functionName": "isDateObject",
+    "initialCode": "function isDateObject(input) {\n  // Write your code here\n}",
+    "note": "For instance, calling isDateObject(new Date()) should return `true`.\n\nMeanwhile, isDateObject('2021-10-15') should return `false` as it's a string representation of a date, not a Date object itself.",
+    "solution": "function isDateObject(input) {\n  return input instanceof Date;\n}"
   },
   {
     "id": 11,
@@ -167,14 +169,14 @@
   },
   {
     "id": 16,
-    "level": "easy",
-    "category": "Array",
-    "title": "Remove Duplicates",
-    "description": "Design a function named 'removeDuplicates' that takes an array as input and returns a new array with all duplicate elements removed, preserving only unique elements.\n\nThe order of elements in the output should reflect their first occurrence in the input array.",
-    "functionName": "removeDuplicates",
-    "initialCode": "function removeDuplicates(arr) {\n  // Your code here\n}",
-    "note": "For example, given the array [1, 2, 2, 3, 4, 4, 4, 5], the function should return [1, 2, 3, 4, 5].",
-    "solution": "function removeDuplicates(arr) {\n  return [...new Set(arr)];\n}"
+    "level": "medium",
+    "category": "Maths",
+    "title": "Factorial",
+    "description": "Create a function named 'factorial' that computes the factorial of a given non-negative integer, n.\n\nThe factorial of n (denoted as n!) is the product of all positive integers less than or equal to n.\n\nFor instance, the factorial of 5 (5!) is calculated as 5 x 4 x 3 x 2 x 1.",
+    "functionName": "factorial",
+    "initialCode": "function factorial(n) {\n  // Write your code here\n}",
+    "note": "For the input 5, the function should return 120 as 5! equals 5 x 4 x 3 x 2 x 1 which is 120.\n\nFor the input 0, the function should return 1, since 0! is defined as 1.",
+    "solution": "function factorial(n) {\n  if (n === 0 || n === 1) {\n    return 1;\n  }\n  return n * factorial(n - 1);\n}"
   },
   {
     "id": 17,

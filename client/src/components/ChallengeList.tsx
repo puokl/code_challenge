@@ -77,6 +77,10 @@ const ChallengeList: React.FC = () => {
         <h1 className="text-3xl font-semibold mb-6 text-center font-permanent-marker">
           Javascript Coding Challenges
         </h1>
+        <h3 className=" mb-6 text-center font-short">
+          Refresh your Javascript knowledge with these coding challenges. Have
+          Fun!
+        </h3>
         <div className="bg-gray-100 p-2 shadow rounded">
           <ul>
             {filteredChallenges.map((challenge: any) => (
@@ -121,7 +125,7 @@ const ChallengeList: React.FC = () => {
                     to={`/challenge/${challenge.id}`}
                     className="self-center"
                   >
-                    <button className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-md text-sm font-changa">
+                    <button className="bg-sky-500 hover:bg-sky-700 text-white font-semibold py-2 px-6 rounded-md text-sm font-changa">
                       Train
                     </button>
                   </Link>
