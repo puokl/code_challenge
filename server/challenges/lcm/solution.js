@@ -4,6 +4,6 @@ function gcd(a, b) {
 }
 
 function lcm(a, b) {
-  return Math.abs(a * b) / gcd(a, b);
+  return (a === 0 || b === 0) ? 0 : Math.abs(a * b) / gcd(a, b);
 }
 module.exports = lcm;
