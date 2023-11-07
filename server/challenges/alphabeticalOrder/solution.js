@@ -1,4 +1,4 @@
 function alphabeticalOrder(str) {
-  // Write your code here
+  return str.split("").sort().join("");
 }
 module.exports = alphabeticalOrder;

@@ -1,4 +1,4 @@
 function removeDuplicates(arr) {
-  // Your code here
+  return [...new Set(arr)];
 }
 module.exports = removeDuplicates;

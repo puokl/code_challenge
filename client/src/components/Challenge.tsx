@@ -29,24 +29,10 @@ const Challenge: React.FC = () => {
   const [challengeName, setChallengeName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSolution, setShowSolution] = useState<boolean>(false);
-  const [confirmShowSolution, setConfirmShowSolution] =
-    useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState("instructions");
 
   const handleToggleSolution = () => {
-    if (!showSolution) {
-      // If we're about to show the solution, ask for confirmation
-      setConfirmShowSolution(true);
-    } else {
-      // If we're hiding the solution, just hide it without confirmation
-      setShowSolution(false);
-    }
-  };
-
-  const confirmSolution = (answer: any) => {
-    if (answer) {
-      setShowSolution(true);
-    }
-    setConfirmShowSolution(false);
+    setShowSolution((prevShowSolution) => !prevShowSolution);
   };
 
   const navigate = useNavigate();
@@ -134,105 +120,127 @@ const Challenge: React.FC = () => {
   if (!challenge) return <div>Loading...</div>;
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="w-screen p-8 bg-slate-300">
       <button
         onClick={goBackToHome}
-        className="absolute top-2 left-2 bg-blue-500 text-white font-semibold py-2 px-4 rounded-md"
-        style={{ position: "absolute" }} // Ensure it is positioned in the top-left
+        className="flex absolute top-4 left-12 bg-blue-500 text-white font-semibold py-1 px-4 rounded-lg"
       >
+        {/* <img src="/home.png" alt="Home" className="mr-2 w-5 h-5" /> */}
         Home
       </button>
-      <h1 className="text-4xl font-bold mb-6">{challenge.title}</h1>
-      <p className="text-gray-700 mb-2">{challenge.description}</p>
-      {challenge.note && (
-        <p className="text-gray-500 text-xs mb-4">{challenge.note}</p>
-      )}
+      <div className="flex w-full h-screen">
+        <div className="info w-2/5 h-full p-4 flex flex-col bg-slate-200 overflow-auto rounded-lg mt-2 mr-2">
+          <h1 className="text-4xl font-bold mb-6 mt-4 font-changa">
+            {challenge.title}
+          </h1>
 
-      <div className="flex">
-        <div className="flex-1 w-1/2 pr-2">
-          <CodeMirror
-            value={userCode}
-            options={{
-              mode: "javascript",
-              theme: "default",
-              lineNumbers: true,
-            }}
-            onBeforeChange={(_editor, _data, value) => {
-              setUserCode(value);
-            }}
-            editorDidMount={(editor) => {
-              editor.setSize(null, "400px");
-            }}
-          />
+          {/* Tab buttons */}
+          <div className="flex mb-4">
+            <button
+              className={`px-4 py-1 rounded-lg font-changa ${
+                activeTab === "instructions" ? " bg-slate-50" : "text-gray-500"
+              }`}
+              onClick={() => setActiveTab("instructions")}
+            >
+              Instructions
+            </button>
+            <button
+              className={`px-4 py-1 rounded-lg font-changa ${
+                activeTab === "solution" ? " bg-slate-50" : "text-gray-500"
+              }`}
+              onClick={() => setActiveTab("solution")}
+            >
+              Solution
+            </button>
+          </div>
+
+          {/* Tab content */}
+          {activeTab === "instructions" && (
+            <div className="flex flex-col h-full border p-4 bg-gray-100 rounded-lg">
+              {challenge.description.split("\n\n").map((paragraph, index) => (
+                <p className="text-gray-700 mb-2 font-short">
+                  {paragraph.trim()}
+                </p>
+              ))}
+
+              {challenge.note && (
+                <p className="text-gray-600 text-sm my-4 font-kalam">
+                  {challenge.note}
+                </p>
+              )}
+            </div>
+          )}
+          {activeTab === "solution" && (
+            <div className="flex flex-col h-full border p-4 bg-gray-100 rounded-lg">
+              <button
+                onClick={handleToggleSolution}
+                className="bg-teal-500 text-white font-semibold py-2 px-4 rounded-md my-4 w-1/3 mx-auto font-changa"
+              >
+                {showSolution ? "Hide Solution" : "Show Solution"}
+              </button>
+
+              {showSolution && (
+                <pre className="text-sm whitespace-pre-wrap">
+                  {challenge.solution}
+                </pre>
+              )}
+            </div>
+          )}
         </div>
+        <div className="w-3/5 h-full flex flex-col">
+          <div className="code h-1/2 p-2 overflow-auto relative">
+            <CodeMirror
+              value={userCode}
+              options={{
+                mode: "javascript",
+                theme: "default",
+                lineNumbers: true,
+              }}
+              onBeforeChange={(_editor, _data, value) => {
+                setUserCode(value);
+              }}
+              editorDidMount={(editor) => {
+                editor.setSize(null, "400px");
+              }}
+            />
+            <div className="flex flex-col">
+              <button
+                onClick={handleSubmit}
+                className="bg-green-600 text-white font-semibold py-1 px-3 rounded-md mt-4 w-36 absolute top-0 right-0 m-4"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
 
-        <div className="flex-1 w-1/2 pl-2">
-          <div
-            className={`h-full border bg-slate-100 ${
-              isLoading
-                ? "border-stone-400 animate-pulse border-4"
-                : "border-gray-300"
-            } rounded-md p-4`}
-          >
-            <h2 className="text-2xl font-semibold mb-4">Test Results</h2>
-            {isLoading ? (
-              <div className="text-gray-500">Running tests...</div>
-            ) : (
-              testResults && (
-                <div className="test-results overflow-auto whitespace-pre-wrap">
-                  <pre
-                    dangerouslySetInnerHTML={{
-                      __html: highlightTestResults(testResults),
-                    }}
-                  />
-                </div>
-              )
-            )}
+          <div className="test  h-1/2 p-2 overflow-auto">
+            <div
+              className={`h-full border bg-slate-100 ${
+                isLoading
+                  ? "border-stone-400 animate-pulse border-4"
+                  : "border-gray-300"
+              } rounded-md p-4`}
+            >
+              <h2 className="text-2xl font-semibold mb-4 font-changa">
+                Test Results
+              </h2>
+              {isLoading ? (
+                <div className="text-gray-500">Running tests...</div>
+              ) : (
+                testResults && (
+                  <div className="test-results overflow-auto whitespace-pre-wrap">
+                    <pre
+                      dangerouslySetInnerHTML={{
+                        __html: highlightTestResults(testResults),
+                      }}
+                    />
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <button
-          onClick={handleSubmit}
-          className="bg-green-500 text-white font-semibold py-2 px-4 rounded-md mt-4 w-36"
-        >
-          Submit
-        </button>
-      </div>
-
-      <div>
-        <button
-          onClick={handleToggleSolution}
-          className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mt-6 w-36"
-        >
-          {showSolution ? "Hide Solution" : "Show Solution"}
-        </button>
-        {confirmShowSolution && (
-          <span className="inline-block ml-4">
-            Are you sure?
-            <span
-              onClick={() => confirmSolution(true)}
-              className="text-green-600 cursor-pointer ml-2"
-            >
-              Yes
-            </span>
-            <span className="mx-1">/</span>
-            <span
-              onClick={() => confirmSolution(false)}
-              className="text-red-600 cursor-pointer ml-1"
-            >
-              No
-            </span>
-          </span>
-        )}
-      </div>
-
-      {showSolution && (
-        <div className="solution mt-4">
-          <h2 className="text-2xl font-semibold mb-4">Solution</h2>
-          <pre className="text-sm">{challenge.solution}</pre>
-        </div>
-      )}
     </div>
   );
 };
